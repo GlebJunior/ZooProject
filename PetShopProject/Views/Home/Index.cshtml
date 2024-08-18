@@ -1,0 +1,28 @@
+﻿@using PetShopProject.Models
+
+@{
+    ViewData["Title"] = "Paws & Claws";
+    Layout = "~/Views/Shared/Layouts/_Layout.cshtml";
+    var AnimalsAndPictures = ViewBag.animalsAndPictures as IEnumerable<dynamic>;
+}
+
+<body>
+    <link rel="stylesheet" type="text/css" href="~/Styles/homestyle.css" />
+    <div class="welcomeContainer">
+        <h1>Welcome to the pet store with the most exotic animals in the world</h1>
+        <h2>Our top animals:</h2>
+    </div>
+    <div>
+        @foreach (var item in AnimalsAndPictures!)
+        {
+            <div class="animalContainer">
+                <img src="data:image/png;base64,@(item.Image.PictureBase64)" alt="Image of @item.Animal.Name" />
+                <div class="textContainer">
+                    <h2>@item.Animal.Name</h2>
+                    <p>@item.Animal.Description</p>
+                </div>
+
+            </div>
+        }
+    </div>
+</body>

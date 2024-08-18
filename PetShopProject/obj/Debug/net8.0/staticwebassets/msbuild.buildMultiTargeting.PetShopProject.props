@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\PetShopProject.props" />
+</Project>

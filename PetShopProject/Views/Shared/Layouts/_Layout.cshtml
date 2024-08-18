@@ -1,0 +1,51 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+	    <title>@ViewBag.Title</title>
+	    <link href="~/Styles/stylesheet.css" rel="stylesheet">
+    </head>
+    <body>
+        <div>
+            <header>
+                <div class="headerContent">
+                    <a asp-controller="Home" asp-action="Index">
+                        <img src="~/Images/logo.png" alt="companyLogo"/> 
+                    </a>
+                    <nav>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li>
+                                <a href="/Catalog/Index?CategoryId=1">Catalog</a>
+                            </li>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            if (User.IsInRole("Admin"))
+                            {
+                                <li><a asp-controller="Admin" asp-action="Index">Administration Zone</a></li>
+                            }
+                            else
+                            {
+                                <li><a asp-controller="Admin" asp-action="Logout">Log Out</a></li>
+                            }
+                        }
+                        else
+                        {
+                            <li><a asp-controller="Admin" asp-action="LoginPage">Login</a></li>
+                        }
+                        </ul>
+                        <h1>Paws & Claws Pet Paradise</h1>
+                    </nav>
+                </div>
+            </header>
+            @RenderBody()
+            <footer>
+                <div class="footerContent">
+                    <p>© 2024 Gleb & Gleb Jr. Co. All Rights Reserved.</p>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,80 @@
+﻿
+@using PetShopProject.Models
+@{
+    ViewData["Title"] = "Paws & Claws";
+    Layout = "~/Views/Shared/Layouts/_Layout.cshtml";
+}
+
+<body>
+    <link rel="stylesheet" type="text/css" href="~/Styles/catalogstyle.css" />
+    <div>
+        @if (ViewBag.animalId == 0)
+        {
+         
+            <div>
+                <form method="get" action="/Catalog/Index">
+                    <select name="categoryId" onchange="this.form.submit()">
+                        <option value="">Select a category</option>
+                        @foreach (var category in ViewBag.categories)
+                        {
+                            @:<option value="@category.CategoryId" @(category.CategoryId.ToString() == ViewBag.SelectedCategoryId?.ToString() ? "selected" : "")>
+                                @category.Name
+                            @:</option>
+                        }
+                    </select>
+                </form>
+            </div>
+            if(ViewBag.animalsAndPictures.Count == 0)
+            {
+                <div  class="noAnimalsMsg">
+                <span>There are no animals in this category.</span>
+                </div>
+            }
+            <div class="allAnimals">
+            @foreach (var item in ViewBag.animalsAndPictures)
+            {
+                <div class="animalContainer">
+                    <div class="textContainer">
+                        <h2>@item.Animal.Name</h2><br />
+                        <img src="data:image/png;base64,@(item.Image.PictureBase64)" alt="Image of @item.Animal.Name" /><br />
+                        
+                        <button onclick="window.location.href='/Catalog/@item.Animal.AnimalId'">View Details</button>
+                    </div>
+                </div>
+            }
+            </div>
+        }
+        else
+        {
+            <div class="allAnimals">
+                <div class="animalContainer wide">
+                    <img src="data:image/png;base64,@(ViewBag.animalImage)" alt="Image of @Model.Name" />
+                    <div class="textContainer">
+                        <h3>@Model.Name</h3>
+                        <p>Age: @Model.Age</p>                
+                        <p>Species: @ViewBag.categoryName</p>          
+                        <br/>
+                        <p>@Model.Description</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="commentSection">
+                <button onclick="window.location.href='/Catalog/Index?CategoryId=@Model.CategoryId'">Back to Catalog</button>
+                <h3>User Comments</h3>
+                <div>
+                    <form method="post" action="@Url.Action("Create", "Catalog")">
+                        <input type="hidden" name="animalId" value="@Model.AnimalId" />
+                        <textarea type="text" id="commentBody" name="commentBody" placeholder="Write your comment here..." required maxlength="1000"></textarea>
+                        <br>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+                @foreach (Comment comment in Model.Comments)
+                {
+                    <div>@comment.CommentText</div>
+                }
+            </div>
+        }
+    </div>
+</body>

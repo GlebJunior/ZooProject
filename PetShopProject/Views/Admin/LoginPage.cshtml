@@ -1,0 +1,36 @@
+﻿@model PetShopProject.Controllers.AdminController
+@{
+    ViewData["Title"] = "Paws & Claws";
+    Layout = "~/Views/Shared/Layouts/_Layout.cshtml";
+}
+
+<body>
+    <link rel="stylesheet" type="text/css" href="~/Styles/adminstyle.css" />
+    <div class="topArea">
+        <div class="infoContainer loginContainer">
+            <h2>Login</h2>
+            <form asp-controller="Admin" asp-action="Login" method="post">
+                <table>
+                    <tr>
+                        <td><label for="UserName">Username</label></td>
+                        <td>
+                            <input type="text" name="UserName" required maxlength="50" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="Password">Password</label></td>
+                        <td>
+                            <input type="password" name="Password" required maxlength="50" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button type="submit">Login</button></td>
+                    </tr>
+                </table>
+            </form>
+            <div asp-validation-summary="ModelOnly"></div>
+        </div>
+
+    </div>
+</body>
+
